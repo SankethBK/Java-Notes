@@ -1,0 +1,1306 @@
+Introduction
+
+Java code gets compiled to bytecodes whcih are machine independent.
+The byte codes are run on JVM (interoreter).
+Java is OOP but not 100% because it provides primitive data types like int, char, floar ,.. . 
+
+
+Explaination for hello World program 
+
+class HelloWorld 
+{ 
+    // Your program begins with a call to main(). 
+    // Prints "Hello, World" to the terminal window. 
+    public static void main(String args[]) 
+    { 
+        System.out.println("Hello, World"); 
+    } 
+} 
+
+we can write public static keywords in any order.
+main method is static so that compiler can call it without creating any object of that class .
+System is a predefined class , out is a reference variable of class out which is connected to console.
+By convention the name of the file is name of the class which contains the main mathod .
+Each java file can have atmost one public class which defines main method .
+
+After compiling a file HelloWorld.class is generated which can be run by JVM interoreter.
+
+Naming conventions
+
+Classes , Interface
+First letter of each internal word must be capital.
+
+Methods 
+Camel casing 
+
+constant variables 
+All caps , internal words seperated with '_'
+
+Package 
+the prefix of all packages should be in lower case 
+
+
+JVM
+
+JVM acts as a run-time engine to run java applications. 
+JVM actually calls the main method.
+JVM is a part of JRE.
+
+We can geta the info about class by getClass() method .
+
+public static void main(String[] args){
+    Student s1 = new Student();
+    Class c1 = s1.getClass();
+    System.out.println(c1.getName());   // class name
+
+    Method[] m = c1.getDeclaredMethods();  // list of methods
+    Field[] f = c1.getDeclaredFields();    // list of fields
+}
+
+if we have 3 classes in our java file there would be 3 .class files created in the same directory on compiling .
+
+JDK = JRE + Development tools
+JRE = JVM + Library classes 
+
+is main method compulsory
+If we are using JDK < 7 , not
+
+we can write the code in just a static block 
+
+public class Test  
+{ 
+    // static block 
+    static
+    { 
+        System.out.println("Hello User"); 
+    } 
+} 
+
+It will give exception at the end saying no main method but that can be fixed by adding 
+System.exit(0) at the end .
+
+From JDK >= 7, main method is compulsory.
+
+The filename and public class name should be same when the class is public , if we just write as class instead of public class, they need not be same .
+
+Also we can define more than 1 class having main method.
+Test.java
+
+class ForGeeks { 
+    public static void main(String[] args) 
+    { 
+        System.out.println("For Geeks class"); 
+    } 
+} 
+  
+class GeeksTest { 
+    public static void main(String[] args) 
+    { 
+        System.out.println("Geeks Test class"); 
+    } 
+} 
+
+When we compile the file we get 2 .class files
+ForGeeks.class
+GeeksTest.class
+
+we can execute them independently
+
+Even if write public class and other class's each class will have it;s own .class file.
+
+To store the .class files generated in different directory.
+javac -d Classes A.java 
+
+-d is used to store the output in different directory.
+now the .class files will be stored in Classes folder (Created if not present)
+
+Let's say our current java file uses a class whose .class file is in other directory so when we 
+compile the program we get error that class not found.
+It's because java's default class path is directory in which java file is present.
+
+So we need to change this classpath to that directory which contains required .class file 
+
+javac -cp Classes/ A.java 
+
+Let's say along with this we want to keep A.class in Classes directory.
+
+javac -d Classes/ -cp Classes/ A.java 
+
+Now A.class is compiled and present in Classes directory.
+instead of going there and executing it we can do that from current directory only.
+
+java -cp Classes/ A 
+
+We can define classes with the names of predefined classes.
+Eg 
+
+public class String {
+    public static void main(String[] args){
+        System.out.println("i am String");
+    }
+}
+
+We get error here because we are using java's built in String class in arguments as we have already overrided it 
+In this case we have to provide the complete path to String class 
+
+public class String {
+    public static void main(java.lang.String[] args){
+        System.out.println("i am String");
+    }
+}
+
+We can have a variable name with the predefined class name no problem with that.
+
+Rules for identifiers 
+
+1. Can contain A_Z , a-z , 0-9, '_' , '$'
+2. Cannot begin with digits.
+3. Cannot be reserved keywords.
+      int while = 1.
+These are valid identifiers
+$myNameIs, _What 
+
+primitive data types 
+char (2 bytes), boolean, byte (1 byte), short (2 byte), int , float , double
+non primitive data types 
+Arrays , Strings, ...
+
+Enums 
+
+Enums serve the purpose of representing a group of named constants 
+In Java enums are more powerful.
+We can add variables, constructors, methods to enums.
+First line inside enums should be a list of constants and the other things like 
+methods , constructors and variables.
+
+enums are implemented in backend like this 
+enums Color {
+    RED, GREEN, BLUE
+}
+
+class Color {
+    public static final Color = new Color();
+    public static final Color = new Color();
+    public static final Color = new Color();
+}
+
+Enums can also be defined inside classes.
+Enums can also be passed to switch clause.
+
+Every enum is implicitly public static final, since it is static we can access it using enum name.
+We can declare main() method inside enum . Hence we can invoke enum directly from the command prompt.
+
+All enums implicitly extend java.lang.Enum class 
+toString() method is overridden in java.lang.Enum class which returns enum constant name.
+enum can implement any interfaces.
+
+Some methods of enum 
+
+values() - returns all values present inside enums.
+ordinal() - returns constant index of every enums.
+valueOf() - returns the enum constant of the specific string if exists. 
+
+Enums can have concrete and abstract methods .
+
+Enums with customized values in java 
+
+enum  Fruits
+{
+    APPLE(“RED”), BANANA(“YELLOW”), GRAPES(“GREEN”);
+}
+
+We have to make parameterized constructor for enum , as default constructor doesn't takes parameters 
+Constructor has to be private because we will allow object creation only from within the classes.
+
+stringBuffer appendCodePoint()
+Takes in a string as input and appends the ascii character of that code to the string.
+
+StringBuffer sbf = new StringBuffer("GeeksForGeeks")
+sbf.appendCodePoint(65);
+System.out.println(sbf);
+
+GeeksForGeeksA
+
+Local variables:
+    Initialization of these varibles before use is mandatory.
+Instance variables:
+    They are created when the object is created and destroyed when the object is destroyed.
+    We can speicfy access modifiers.
+    Initialization is not mandatory as they are set to default values.
+Static variables:
+    They are also called as class variables.
+    We will have only copy of static variable per classes.
+    Initialization of static variables are not necessary they are set to their default values (0 for Numeric).
+    If we access static variable like instance variable through the objects, the compiler will give warning and 
+    replacesthe object name with class name.
+    If we access the static variable without the class name the compiler will automatically append the class name.
+
+
+Scope of variables in class (both instance and static)
+
+Modifier         Package       Subclass      World  
+
+public            Yes            Yes           Yes 
+protected         Yes            Yes           No 
+default           Yes            No            No 
+private           No             No            No 
+
+Static methods can access only static variables, but static variables can be accessed by other methods applications.
+
+A common error with local variables.
+
+class Test 
+{ 
+    public static void main(String args[]) 
+    { 
+        int a = 5; 
+        for (int a = 0; a < 5; a++) 
+        { 
+            System.out.println(a); 
+        } 
+    } 
+} 
+This is error because redeclaring a while a is already present in the scope.
+This works in c++ but not in java .
+
+class Test 
+{ 
+	public static void main(String args[]) 
+	{ 
+		{ 
+			int x = 5; 
+			{ 
+				int x = 10; 
+				System.out.println(x); 
+			} 
+		} 
+	} 
+} 
+
+Error inx already defined.
+
+class Test 
+{ 
+    public static void main(String args[]) 
+    { 
+        for(int i = 1; i <= 10; i++) 
+        { 
+            System.out.println(i); 
+        } 
+        int i = 20; 
+        System.out.println(i); 
+    } 
+} 
+It works because by the time another i was created old i was destroyed.
+
+When the method has same local variable as instance variable we can use the instance variable to differentiate between them. 
+
+
+Final varibales in java
+
+A final variable in java can be assigned value only assigned once , we can assign a value in declaration or later.
+
+When final is used with non-primitive types (non-primitive types are references to objects) , 
+the members of the referred objects can be changed , for non-primitive types it means that they cannot be changed to refer 
+any other object.
+
+class Test1 { 
+    int i = 10; 
+} 
+
+public class Test2 { 
+	public static void main(String args[]) { 
+        final Test1 t1 = new Test1(); 
+        t1.i = 30; // Works 
+	} 
+} 
+
+If we have more than one constructors we have to initialize final variables in all of them , as not doing it may lead to accessing blank variables.
+which is an error , however constructor chaining can be used to do se. 
+
+class Test(){
+    final int i;
+    
+    Test(int x){
+        i = x;
+    }
+
+    Test(){
+        this(10);
+    }
+}
+
+Generics 
+
+Generics in Java is same as templates in C++, the main idea is to allow any data type (Integer, Float, String ,...) as parameters to
+mathods , classes and interfaces.
+For example classes like ArrayList , HashMap , HashSet also use generics as well.
+
+To create an object of generics in type.
+
+BaseType <Type> obj = new BaseType <Type>()
+In parameters type we cannot use primitive types like int, char, float ...
+
+Generic methods can also be used inside of functions, independent of classes.
+
+<T> void func(T elem){
+
+}
+
+Here <T> is not return type 
+If we want to return object of type T 
+<T> T void func(T elem){
+    return T;
+}
+
+To get the class name of an object
+
+obj.getClass() - will give as class java.lang.String
+obj.getClass().getName() - will give class name as java.lang.String
+
+ We can use generics to solve the problem of types.
+
+ eg: we can have an Arraylist of type unspecified and store strings in it,
+ when we retrive fromt it we have to use type casting.
+
+ Arraylist a1 = new ArrayList();
+ a1.add("Sachin");
+ a1.add("Rahul");
+ a1.add(15);
+
+ we added int to an ArrayList of strings, this is fine at complie time.
+
+ While retriving we get error.
+
+ String s1 = (String)a1.get(0);
+ String s2 = (String)a1.get(1);
+ String s3 = (String)a1.get(2); // error at runtime 
+
+
+ If we use generics we will get error at compile time and no type casting required.
+
+ ArrayList <String> a1 = new ArrayList<String>();
+ a1.add("SuperMario");
+ String s1 = a1.get(0);
+
+ Suppose we want to restrict the type of objects that can passed as parameterized types.
+
+ <T extends superClassName>
+
+It means that T can only be replaced by superClassName or subclasses of superClassName.
+subclasses can be of direct or indirect type .
+
+Multiple bounds
+
+<T extends superClassName & Interface>
+
+class Bound<T extends A & B>{
+
+}
+
+It means that parameter of Bound class should be A or it's subclass and it should implement 
+the interface B.
+
+Enhanced For loops 
+
+for (T element: Collection obj/array){
+    statement(s)
+}
+
+They are read only for loops and we will not know the index of the element
+
+do while loops 
+
+do {
+
+} while (condition);
+
+
+switch statements can include strings.
+
+We don't need to have forward declarations in java , i.e., no need to declare a class before using it 
+in other class (if it was defined after the class in which it was used) like in C/C++ .
+
+// widening conversion 
+conversion of a smaller tyep to larger type 
+
+System.out.println("L" + "O"); // LO
+System.out.println('L');     // L
+System.out.println('O');     // O
+System.out.println('L' + 'O');  // 155 
+
+because + expects int type, char types are conveerted to their unicodes.
+
+char a = 66; // a will be 'B'
+
+Java allows only widening conversions.
+For narrowing conversions we have to explicitly type cast them.
+
+int num = 233;
+byte b = (byte)num;
+
+otherwise java gives error.
+
+documentation style comments 
+/**
+*/
+
+Java doesn't supports goto, but it supports labels .
+labels can be used for nested for loops to break out of the paticular nesting, we can specify
+break label;
+
+
+null in java 
+
+1. null is case sensitive.
+     String a = null;
+2. Any reference variable in java has default null.
+
+public class Test 
+{ 
+    private static Object obj;  
+    public static void main(String args[]) 
+    { 
+        // it will print null; 
+        System.out.println("Value of object obj is : " + obj); 
+    }  
+} 
+
+Null types can be typecasted
+String myStr = (String) null ;
+
+During autoboxing and unboxing NullPointerException is thrown 
+
+public class Test 
+{ 
+	public static void main (String[] args) throws java.lang.Exception 
+	{ 
+			//An integer can be null, so this is fine 
+			Integer i = null; 
+			
+			//Unboxing null to integer throws NullpointerException 
+			int a = i; 
+	} 
+} 
+
+instanceof operator 
+
+It return true or false at runtime if the object is the instance of thw same classes.
+If the object is same class but null than it returns false 
+
+public static void main(String[] args){
+    Integer i = null;
+    Integer j = 10;
+
+    System.out.println(i instanceof Integer); // false 
+    System.out.println(j instanceof Integer); // true 
+}
+
+We cannot call non-static methods with null objects , however we can call static methods.
+We can use ==, != on null 
+null == null;  // true 
+null != null; // false 
+
+
+From java 9 onwards using '_' alone as a variable is removed.
+
+Using '_' in numeric literals 
+int a = 1_000_000;
+int b = 2.10_21_34
+
+
+Ways to create an object 
+
+1. Using new keyword. 
+2. Using class.forName(String className) method .
+   Consider Test class present in com.p1 package 
+   Test obj = (Test) class.forName('com.p1.Test').newInstance();
+3. Using clone() method 
+   Test t1 = new Test();
+   Test t2 = (Test) t1.clone();
+
+Memory allocation 
+
+in java memory for objects is allocated on heap.
+When we declare a variable of class type it is just a reference created , memory is not allocated.
+In C++ memory is allocated on heap only if we use the new keyword , otherwise on stack if not global or static .
+
+To use clone method we need to implement the cloneable interface and override the clone method.
+Using clone method will not invoke the constructor.
+
+How to swap two objects of same class?
+
+car1 and car2 are objects of a class car , swap the contents of both objects.
+
+before that we have to know this concept 
+
+Java is strictly pass by values.
+
+class Test{
+    public void change(int x){
+        x = 4;
+    }
+
+    public static void main(String[] args){
+        int x = 7;
+        change(x);
+        System.out.println(x); // 7
+    }
+}
+
+A little different thing happens for objects 
+
+class Test{
+    int x;
+    Test(int i){ x = i; }
+    Test() { x = 0; }
+}
+
+class Main{
+    public void change(Test t){
+        t = new Test();
+        t.x = 10;
+    }
+    public static void main(String[] args){
+        Test t = new Test(20);
+        change(t);
+        System.out.println(t.x); // 20
+    }
+}
+
+Why it didn't change even we sent reference to the objects.
+Java is indeed pass by value but we can send reference as value .
+Even though we passed reference (copy of reference) in change function when we said 
+ t = new Test() 
+t was a copied reference to our old object, but we lost it. But that is not going to change 
+our original reference as only a copy of reference is sent .
+
+class Main{
+    public void change(Test t){
+        t.x = 10;
+    }
+    public static void main(String[] args){
+        Test t = new Test(20);
+        change(t);
+        System.out.println(t.x); // 10
+    }
+}
+
+In this case we are not losing the reference to our object hence it works.
+
+
+Now lets come to the main point of swapping 
+
+class Main{
+    public void swap(Test t1, Test t2){
+        Test temp = t1;
+        t1 = t2;
+        t2 = temp;
+    }
+    public static void main(String[] args){
+        Test t1 = new Test(10);
+        Test t2 = new Test(11);
+        System.out.println(t1.x); // 10
+        System.out.println(t2.x); // 11
+    }
+}
+
+Whyy it didn't work?
+Let's see what is happening
+In swap ,
+ when we say Test temp = new Test();
+we created a new object reference temp.
+temp = t1.
+Ok, temp is now pointing to our original t1 object 
+t1 = t2.
+At this point we should realize that t1 is just a copy of reference, so changing this won't change the original reference.
+
+Solution is to create a wrapper class, it is just like we passed pointer to pointer in C. 
+
+class carWrapper{
+    Car c;
+    CarWrapper(Car c){
+        this.c = c;
+    }
+}
+
+class Main{
+    public void static main(String[] args){
+        Car c1 = new Car(12);
+        Car c2 = new Car(13);
+        CarWrapper cw1 = new CarWrapper(c1);
+        CarWrapper cw2 = new CarWrapper(c2);
+        swap(cw1,cw2);
+        System.out.println(c1.x); //12
+        System.out.println(c2.x); //13
+        System.out.println(cw1.c.x); //13
+        System.out.println(cw2.c.x); //12
+        // Well if we start thinking , this is amazing
+    }
+}
+
+Conclusion
+It is not possible to change what c1 and c2 are pointing to through a function.
+
+
+When is it ok to create the object of same class within the same class 
+
+class Test{
+    public static void main(String[] args){
+        Tets t1 = new Test();
+    }
+}
+We are creating object of same class inside the main function . It won't lead to infinite looping because 
+main method is not called for t1. 
+
+class A{
+    A a1 = new A(); // fine 
+    A(){
+        A a2 = new A(); // not fine
+    }
+}
+
+It leads to infinite recursion only if we create another object in constructor.
+We should note that constructor is the only function executed when an object is created.
+
+function overloading 
+
+When 2 functions either from same class or one from parent class and another from child class 
+have same names but different signatures , then it is called function overloading.
+
+When functions are overloaded , functions present in oarent class also can be called.
+
+function overriding 
+
+When we define a function of same name and signature in child class it is called overriding.
+It is one of the way to achieve run time polymorphism, the method that will be executed depends on the object that
+is calling the method, if a parent class's object is used then parent class's method is called otherwise child class's method is called.
+
+Why to use @Override 
+We can override even without using @Override it will work, but if we use @Override and we make a mistake in overriding then we get compile time error
+
+Overriding with access modifiers 
+ Access modifier for an overriding method can allow more access , but not less access than 
+ the overridden method .
+ eg: If the parent class's method is protected we cannot make it as private in child class but we can make 
+ public or protected . 
+
+ Access can be widened but cannot be narrowed
+
+Final methods cannot be overridden . 
+
+Static methods cannot be overridden like normal fucntions 
+
+If a normal method tries to override static method or vice versa it generates compile-time error. 
+If a static method overrides another static function than it is method hiding . 
+
+
+We cannot override private or final methods.
+The overriding method must have the same return type . 
+
+
+We can invoke the overrideen method of parent class by using super.fname() 
+
+
+Referencing a subclass objects with subclass vs superclass reference 
+
+We can refer an subclass object using superclass's reference, in this case we can access only methods 
+and variables defined by superclass. If any function of super class is overridden by subclass, then it would be always the 
+subclass's overridden method that executes.
+
+
+For overrided static methods it is not true that always subclass's method is executed
+For a given reference variable, it;s static class is executed
+ 
+Abstract classes 
+
+An abstract class may not have abstract methods , there may be concrete methods also .
+An abstract method is declared with abstract keyword without implementation . 
+A class extending the abstract class should override all its abstrat methods or it should be declared as abstract class .
+There can be no object of abstract class. 
+Abstract class has constructor which may be used by subclasses to initialize data that may be used by concrete methods of abstract class . 
+It is possible to create abstract class without any abstract methods . 
+
+
+Interfaces  
+
+All methods in an Inerface are public , static and final . 
+
+We can add default body to the function in interface using the default keyword . 
+We can add static. 
+
+Initialization blocks 
+
+There are two types of initialization blocks 
+1. Instance initialization block.
+2. Static initialization block. 
+
+Instance Initialization blocks 
+They are executed before constructors each time constructor is called. 
+If we initialization blocks in parent class, they are executed on call to super() before constructors. 
+
+Static Initialization blocks 
+
+This block can be used for initialization of static variables, they are executed exactly once.
+When we create an object of the class or try to access a static member .  
+
+Final Instance variables 
+
+We know that if we dont initialize instance variables compiler provides it default value , but if we make them Final
+compiler will not provide default value, they will be blank variables . 
+We have to perform initialization explicitly whether we use it or not, we have to initialize them before constructor completion . 
+
+We can do it by 
+1. initialization at the time of declaration . 
+2. Instance Initialization blocks . 
+3. Default Constructors (if we have multiple constructors we have to initialize inside all of them, so just call default constructor)
+
+Same things apply for final static variables also. 
+
+// final with for-each statement 
+// legal statement 
+for (final int i : arr) 
+    System.out.print(i + " ");
+
+Final methods 
+ Final methods cannot be overridden . 
+
+Final Classes 
+ Final classes cannot be extended . All wrapper class Integer, Float, ... are final classes . 
+
+this reference in java 
+
+1. Can be used to refer to current class instance varibles. 
+2. Using this to invoke constructor . 
+3. Using this to return current class instance.
+
+
+Super reference in Java 
+
+1. Can be used to access variables of parent class and especially overriden methods of parent class from child class. 
+2. To call parent class's constructor. 
+
+Can we do overloading based on return types 
+
+If it is like this 
+
+public int foo() {  }
+public char foo() {  }
+
+then we cannot do 
+
+However overloading based on return types when the data types of functions being called is 
+explicitly specified. 
+
+public int foo(int a){ }
+public char foo(int a, int b) { }
+
+We can aslo overload static methods. 
+In overriding of static functions it is not called overriding because it doesnt cause runtime polymorphism 
+
+
+Covariant return types 
+
+We cannot override a method by just change in return type , but we can do that if the return type of child class is sub type of return type of parent class 
+
+class A {} 
+class B extends A {} 
+  
+class Base 
+{ 
+    A fun() 
+    { 
+        System.out.println("Base fun()"); 
+        return new A(); 
+    } 
+} 
+  
+class Derived extends Base 
+{ 
+    B fun() 
+    { 
+        System.out.println("Derived fun()"); 
+        return new B(); 
+    } 
+} 
+
+Every class in Java is directly or indirectly child class of object class 
+We can use , override some of the functions of object class. 
+
+1. toString() - The default toString() returns class name + "@" + hashCode of the object. 
+2. hashCode() - For each object JVM generates an unique integer known as hashCode, if we want to oveerride this 
+                we should make sure to preserve the uniqeness property. 
+3. equals(Object obj) - Compares the Object with "this" . It is recommended to override this method to get our own equality condition. 
+                equals uses hashCode to compare objects, so two objects may be returned as not equal even though they have all attributes same , it;s because their 
+                hashCodes are different. 
+4. getClass() - Returns the class of "this". It is also used to get metadata of the class, it is a final method so it cannot be overridden
+5. finalize() - It is called before the object is destroyed by the garbage collector , So if we want to perform memory clean ups we can do, 
+                this method is called only once even though the object is eligible for garbage collection multiple times. 
+
+6. clone()   - creates an object that is same as "this"
+
+
+Static classes 
+
+Java allows to define classes inside classes, they are called nested classes. 
+Unlike top level classes , Inner classes can be static or non static. 
+
+A static nested class may be instantiated without the instantiating it's outer class. 
+A static nested class can access only static members of the parent class. 
+
+While a non static an inner class can be created only after instantiation of parent class. 
+ 
+public String toString() { 
+    return String.format(re + " + i" + im); 
+} 
+
+If we create reference variable of type java.lang.Object then we don't have to worry about types ..
+
+
+Static and Dynamic binding in Java 
+
+The Binding which can be resolved at compile time is called static or early binding. Binding of all static, private and final 
+mathods are done at compile time as compiler knows they cannot be overridden. 
+
+In Dnyamic binding compiler doesn't decide the method to be called, eg: overriding, compiler has no idea which method is called so it delays the 
+binding for runtime . because it depends on the reference type calling the method. 
+
+Java doesn't supports multiple inheritence because it causes diamond problem. 
+
+When a constructor is executed, we cannot blindly say that an object of that class is created because it may be a call from it's child class using super. 
+
+If the first line of the constructor of child class is not a call to this(parameters) then it will automatically call 
+super() in first line.
+
+A class can extend from one parent class and can implement multiple interfaces. 
+
+In java we cannot access grandparent's overridden method from child class by using super.super.method() .
+
+In java if we override parent class's variables and if we create reference of parent class and keep object of child class 
+then if we access that variable it referes to variable of parent class only, It's because Java uses special runtime polymorphism 
+for methods only. 
+
+Packages 
+
+import package.*; 
+All the classes in package folder will be imported, not subpackages.  
+
+import package.classname 
+Only the specific class is imported 
+
+To delare a package 
+
+package mypack;  // all the classes of this file will be stored in a package mypack 
+public class Pack1{
+    main(){
+
+    }
+}
+
+You have to compile this as 
+javac -d . Pack1.java 
+
+Even if the package exists we have to complie like this then only these classes gets added to the existing package 
+
+To execute this don't write 
+java -cp mypack/ pack1
+
+Write 
+java mypack.Packages1 
+
+
+We cannot use non public classes of a package from outside the package. 
+
+Wrapper classes 
+
+Need of wrapper classes 
+
+1. Objects are needed if we want to modify the arguments to a functions , because primitive types are pass by value 
+2. The classes in java.util package handles objects only. 
+3. Data Structures in Collections eg: Vector, ArrayList store only references not primitive types. 
+4. AN object is needed to support synchronization in multithreading. 
+
+
+Autoboxing 
+ Automatic conversion of primitive types into their objects. 
+ eg: char a = 'a';
+     Character ch = a;
+     ArrayList.add(2);  // because ArrayList stores only references. 
+
+Unboxing 
+ Conversion of wrapper class to corresponding primitive type. 
+  Character ch = 'a';
+  char b = ch;
+  ArrayList.add(24);
+  int num = ArrayList.get(0);
+
+
+We can use new as 
+int a = 10;
+Integer s = new Integer(a);
+
+Sorry , we cannot use it Java 9 onwards it si deprecated. We can use them as normal integers. 
+Integer i = 9;
+
+
+public class WrapperClasses {
+    public static void main(String[] args){
+        Integer i = 8;
+        System.out.println(System.identityHashCode(i));
+        modify(i);
+        System.out.println(i);
+    }
+
+    public static void modify(Integer i){
+        i = i + 1;
+        System.out.println(System.identityHashCode(i)); // same with i++
+    }
+}
+
+
+i is not changed because when we say i = i + 1 in function 
+i is unboxed , 1 is added new i of Integer class is created . We can see it as hashCode changes. 
+
+Number class wraps all these Numeric classes. 
+
+xxx xxxValue() 
+Instance method
+where xxx represents the primitive data type .  
+
+xxx.valueOf(String s)
+Static method 
+Converts the string into object of type xxx and returns it. 
+
+xxx parseXxx(String s) 
+
+int parseInt(String s, int radix)
+radix only for parseInt, parseShort and parseByte, parseLong.
+
+Static method . 
+Xxx can be any primitive type. 
+It returns primitive type of s converted to xxx
+
+int compareTo(NumberSubClass referencename )
+Used to compare this to Number object subclass reference. However two different types cannot be compared. 
+
+It returns 
+0 if Number is equal to this. 
+-1 if Number is greater than this. 
+1 if Number is lesser than this. 
+
+boolean equals(Object obj)
+
+obj - any object 
+true if the object is not null and of same type with same numeric value. 
+
+
+String toString(int i)
+String toBinaryString(int j)
+String toHexString(int i))
+
+Float and other classes have toString() but not toBinaryString() and toHexString() methods. 
+
+Integer.compareTo(int x, int y);
+similar to compareTo but it is a static mathod so can be used without creating any object . 
+
+similar to isAlpha
+boolean Charater.isLetter(char ch); 
+
+String Class 
+
+There are many constructors. We will see some of them.
+
+String( char[] char_arr)
+String(char[] char_arr, int start, int end) 
+
+Strings can be created with or without new keyword. 
+The difference is 
+
+when new keyword is not used if 2 or more strings are equal then they all have only one object and all of them points to the same object. 
+It is not true if we use the new keyword. 
+
+'==' returns true only if references are same, not strings .
+
+StringBuffer Class in Java 
+
+StringBuffers are growable and writeable sequence of characters. We can insert, append, delete chararcters 
+Refer Stringbuffer.java for API. 
+
+StringTokenizer Class 
+
+StringTokenizer(String str, String delim, boolean flag):
+
+If the flag is set to true , delimiter is considered as token , otherwise not. 
+
+Input output  
+
+To take input from kryboard and pass System.in to Scanner object 
+It has next functions we can use. 
+next() - reads next token 
+nextLine() - reads next line 
+next().charAt(0) - reads next character 
+nextInt() , nextDouble() , ...
+
+We can use hasXYZ() to check if XYZ type is availible next .
+
+
+Arrays in Java 
+
+1. All arrays are dynamically allocated. 
+2. We can find length using arr.length. 
+3. It can be used as a static field ,  a method parameter, a local variable. 
+4. Size of the array must be specified by int , not long or short. 
+
+Arrays can be of primitive or non-primitive types. 
+
+type varname[];
+or type[] varname;
+
+
+int a[5]; // error
+int a[]; // not error nut still it is reference variable to array not array itself 
+
+int a[] = new int[5]; // correct 
+
+// to initialize 
+
+int a[] = new int[]{1,2,3};
+int a[] = {1,2,3};
+
+But we cannot specify size and elements together. 
+
+int a[] = new int[3]{1,2,4}; // error 
+
+int a[] = new int[5];
+// array elements are filled with default values , not garbage or blank values .
+
+int a[];
+System.out.println(a.length); // error a is not initialized     
+
+In 2D arrays each array can have different length .
+
+We have to specify first dimension while declaring multidimensional arrays. 
+
+int a[][][] = new int[5][][];
+
+Other dimensions can be speicified later. 
+
+we can use array.getClass() to get class and array.getCLass().getSuperClass() to get super class . 
+
+For integers it is class [I 
+For bytes it is class [B 
+
+For 2d arrays it is class [[I
+
+To clone an array 
+array.clone() 
+
+It creates deep copy at 1 level only . 
+
+boolean : false
+int : 0
+double : 0.0
+String : null
+User Defined Type : null
+
+
+The Array class in java.util package is a part of Java COllection framework. 
+The class provides static mathods to dynamically create and access synamic arrays. 
+
+If we create array of int's we can assign smaller types like byte, short, char  but not long ,  
+
+If we create array of bjects then we can place child class's objects also. 
+
+For array of Interface types we can assign objects of its implementation types .
+
+The Collection interface and (java.util.Collection) and Map interface (java.util.Map) are the two root interfaces of java collection classes. 
+
+Before collection framework was introduced we had Vectors or Arrays or Hashtables. They had no common interface. 
+
+            Collection                Map
+         /     /    \      \            |
+        /      /      \     \           |
+     Set    List    Queue  Dequeue   SortedMap
+     /
+    /
+ SortedSet 
+
+ These are the interfaces availible in Collections 
+
+1. Set: Doesn't allows duplicates . Example implementations of Set interface are 
+        HashSets and TreeSets (Balanced BST based) . TreeSet implements SortedSet. 
+2. List: Elements are ordered and allows duplicates. Example implementations are 
+        LinkedList ( linked list based) 
+        ArrayList ( dynamic list based).
+3. Queue : Typically order elements in FIFO , exceptions like PriorityQueue. 
+4. Deque : Elements can be inserted and deleted at both ends. 
+5. Map : Key value pairs doesn't allows duplicates. 
+        implementation are HashMap , TreeMap (TreeMap extends SortedMap)
+
+
+Iterators 
+
+Iterators are used in Collection framework to returive elements one by one. 
+There are three classes of iterators. 
+
+1. Enumeration
+
+It is used for only legacy collections (vectors and hashTables)
+It has hasMoreElements() and nextElement() methods. 
+
+Vector v = new Vector();
+Enumeration e = v.elements();
+
+It cannot perform remove operations .
+
+2. Iterator 
+
+It is universal iterator we can apply to any collection object. We can perform both read and remove operations. 
+
+Iterator itr = c.iterator();
+
+It has three methods. 
+1.hasNext();
+2.next();
+3.remove();
+
+3. ListIterator
+
+It is only applicable to list collection implemeted classes like arraylist, linkedlist. 
+It provides bi-directional iteration. 
+
+ListIterator ltr = l.listIterator();
+
+It has 6 methods. 
+
+1. hasNext();
+2. next();
+3. nextIndex(); // Returns the index of the element or the size of the list if the iterator is at the last element. 
+4. hasPrevious();
+5. previous();
+6. previousIndex();
+
+
+ArrayList 
+
+ArrayList is similar to vector in C++. 
+
+While declaring 
+Arraylist<Integer> a = new ArrayList();  
+compiler will give error as unchecked and unsafe and you won't ecen know why. 
+So write properly
+Arraylist<Integer> a = new ArrayList<Integer>(); 
+
+Constructors 
+
+ArrayList(); // empty ArrayList 
+ArrayList(Collection C); // Elements of this collections are used to build ArrayList. 
+ArrayList(int capacity); // Although capacity can expand later . 
+
+
+LinkedList 
+
+LinkedList implements List interface. 
+To implement LinkedList doubly linked list is used.
+
+Constructors
+
+LinkedList();
+LinkedList(Collection c); // Elements of this collections are used to build LinkedList . 
+
+
+Creating immutable list , we cannot add or delete but we can change the insize elements
+ImmutableList<T> immutableList = ImmutableList.copyOf(list)
+
+Queues 
+
+1. ArrayBlockingQueue 
+  Backed by arrays means capacity is fixed and cannot be extended. 
+
+ArrayBlockingQueue(int capacity)
+
+add(Element e) ; adds an element at the end of the queue. 
+clear() - removes all elements
+
+offer(e) - adds e to the end .
+peek() -  retrives but not removes from the head. 
+poll() - retives and removes from the head. 
+
+If we create LinkedBlockingQueue we dont have mention capacity, we can use the same above functionalities. 
+
+LinkedBlockingQueue<Integer> lbq = new LinkedBlockingQueue<Integer>();
+
+
+PriorityQueues 
+
+By default they are min heaps 
+2 seemingly important constructors. 
+
+PriorityQueue().
+PriorityQueue(int initialcapacity, Comparator<E> comparator); 
+
+Map and Interfaces 
+ HashMap and LinkedHashMap implemets HashMap 
+ TreeMap implements HashMap. 
+
+
+Exception handling 
+
+When an exception occurs the program searches for exception handler in the call stack by removing one by one elements . 
+If it finds appropriate exception handler then it passes the occured exception to it. Appropriate handler means the type of the exception object 
+
+If  runtime exception handler searches for all methods on call stack and couldn't find any appropriate handler then it handovers the 
+exception object to default exception hanndler.   
+
+If the exception is handled rest of the program is executed, otherwise terminated. 
+
+There shouldn't be any statements in between try and catch otherwise we get catch wothout try error. 
+Finally can be useful if the error is not handled. 
+
+There are three methods of printing the error message. 
+1. e.printStackTrace();
+2. e.toString();
+3. e.getMessage();
+
+In java catching the exception of derived class type before base class type is not allowed. 
+
+
+Checked Exception 
+
+Checked exceptions are exceptions that are checked at compile time
+
+Example when we use FileReader() class to read files , there may be a possibilitiy that a FileNotFoundException is thrown if the file is not found.
+So we sould open file inside try block and write corresponding catch block or otherwise write throws IOException, as IOException is a parent class of FileNotFoundException
+It can catch this error. 
+In C++ all errors are unchecked , but in Java we can catch some errors at compile time only. 
+
+
+Singleton patterns 
+
+Singleton classes are when we want user to allow creation of only one instance of our class.
+we can make the class like this 
+
+public class Database {
+    
+    private String name;
+
+    private static Database interface;
+
+    public static Database getInstance(String name){
+        if (null == instance){
+            instance = new Database(name);
+            return instance;
+        }
+        else {
+            return instance;
+        }
+    }
+
+    private Database(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
+    }
+}
